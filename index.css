@@ -2,16 +2,17 @@ body {
     background-color: #a9ff87;
 }
 
-#title {
+.title {
     text-align: center;
 }
 
 .container {
     border: 1px solid black;
-    margin: 10vh auto;
+    margin: 5vh auto;
     width: 40%;
     flex-flow: column;
     border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     /* height: 100px; */
 }
 
@@ -34,12 +35,29 @@ table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    border-radius: 20px;
 }
 
 td,
 th {
     text-align: left;
     padding: 8px;
+}
+
+th:nth-child(1) {
+    border-radius: 20px 0 0 0;
+}
+
+th:nth-last-child(1) {
+    border-radius: 0 20px 0 0;
+}
+
+tr:nth-last-child(1) td:nth-child(1) {
+    border-radius: 0 0 0 20px;
+}
+
+tr:nth-last-child(1) td:nth-last-child(1) {
+    border-radius: 0 0 20px 0;
 }
 
 tr:nth-child(even) {
