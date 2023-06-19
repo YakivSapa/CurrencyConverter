@@ -78,11 +78,7 @@ if (isset($_POST)) {
 
 <body>
     <h1 id="title">Currency Converter</h1>
-    <div id="external">
-        <div id="menu">
-            <a class="menuButton">Converter</a>
-            <a class="menuButton">History</a>
-        </div>
+    <div class="container">
         <div id="content">
             <div id="calculator">
                 <p>Please provide proper amount below to convert --- to Polish Zloty</p>
@@ -98,12 +94,35 @@ if (isset($_POST)) {
                     <button type="submit">Calculate</button>
                 </form>
                 <?php
-                if ($result) {
-                    echo "<div>" . $result . "</div>";
-                }
+                // if ($result) {
+                //     echo "<div>" . $result . "</div>";
+                // }
                 ?>
             </div>
         </div>
+    </div>
+
+    <!-- Currency Table -->
+    <div class="container">
+        <table>
+            <tr>
+                <th>Currency</th>
+                <th>Code</th>
+                <th>Rate</th>
+            </tr>
+            <?php
+            $query = "SELECT * FROM exchange_rates;";
+            $query_result = mysqli_query($connection, $query);
+            if ($query_result->num_rows > 0) {
+                // output data of each row
+                while ($row = $query_result->fetch_assoc()) {
+                    echo "<tr><td>" . $row["currency"] . "</td><td> " . $row["code"] . "</td><td> " . $row["mid"] . "</td</tr>";
+                }
+            } else {
+                echo "0 results";
+            }
+            ?>
+        </table>
     </div>
 
 </body>

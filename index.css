@@ -6,7 +6,7 @@ body {
     text-align: center;
 }
 
-#external {
+.container {
     border: 1px solid black;
     margin: 10vh auto;
     width: 40%;
@@ -15,20 +15,8 @@ body {
     /* height: 100px; */
 }
 
-#menu {
-    background-color: #eaeaea;
-    display: flex;
-    justify-content: space-around;
-    border-radius: 20px 20px 0 0;
-}
-
-.menuButton {
-    font-size: 24px;
-    /* padding: 0 5vh; */
-}
-
 #content {
-    border-radius: 0 0 20px 20px;
+    border-radius: 20px;
     background-color: white;
     display: flex;
     justify-content: center;
@@ -40,4 +28,24 @@ body {
     flex-flow: column;
     justify-content: center;
     /* height: 35vh; */
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+tr:nth-child(odd) {
+    background-color: white;
 }
