@@ -1,89 +1,11 @@
 <?php
 include "db_connection.php";
+include "api_connection.php";
+include "db_rates.php";
+include "user_data.php";
 
 error_reporting(E_ERROR | E_PARSE);
 $error = "";
-
-// Connection to API.
-$urlContent = file_get_contents('http://api.nbp.pl/api/exchangerates/tables/a/');
-$urlContent2 = file_get_contents('http://api.nbp.pl/api/exchangerates/tables/b/');
-$apiCurrency = json_decode($urlContent, true);
-$apiCurrency2 = json_decode($urlContent2, true);
-
-// Exchange rates logic
-$ratesArray = $apiCurrency[0];
-$rates = $ratesArray['rates'];
-
-$ratesArray2 = $apiCurrency2[0];
-$rates2 = $ratesArray2['rates'];
-
-// Data Base logic
-$inserted_rows = 0;
-foreach ($rates as $value) {
-    $rates = $rates[$inserted_rows];
-    $currency = $value["currency"];
-    $code = $value["code"];
-    $mid = $value["mid"];
-
-    // $query = "INSERT INTO exchange_rates (currency, code, mid) VALUES ('$currency', '$code', '$mid');";
-    $query = "UPDATE exchange_rates SET mid = '$mid' WHERE code = '$code';";
-    $query_result = mysqli_query($connection, $query);
-    $inserted_rows++;
-};
-
-$inserted_rows = 0;
-foreach ($rates2 as $value) {
-    $rates2 = $rates2[$inserted_rows];
-    $currency = $value["currency"];
-    $code = $value["code"];
-    $mid = $value["mid"];
-
-    // $query = "INSERT INTO exchange_rates (currency, code, mid) VALUES ('$currency', '$code', '$mid');";
-    $query = "UPDATE exchange_rates SET mid = '$mid' WHERE code = '$code';";
-    $query_result = mysqli_query($connection, $query);
-    $inserted_rows++;
-};
-
-// if (count($exchange_rates) == $inserted_rows) {
-//     echo "success";
-// } else {
-//     echo "error";
-// }
-// $selected_currency = "";
-
-// User form data.
-if (isset($_POST)) {
-    if (!$_POST['user_amount']) {
-        echo "You have to enter proper amount to convert currency";
-    } else {
-        $fromCode = $_POST['first_code'];
-        $toCode = $_POST['second_code'];
-        $userAmount = $_POST['user_amount'];
-
-
-        $query = "SELECT mid FROM exchange_rates WHERE code = '$fromCode';";
-        $query_result = mysqli_query($connection, $query);
-        $result = $query_result->fetch_array();
-        $result = $result[0];
-        // $query_result = intval($result[0]);
-        $toPLN = $userAmount * $result;
-        // print_r($toPLN);
-
-        $query = "SELECT mid FROM exchange_rates WHERE code = '$toCode';";
-        $query_result = mysqli_query($connection, $query);
-        $result = $query_result->fetch_array();
-        $result = $result[0];
-        $fromPLN = $toPLN / $result;
-
-        $query = "INSERT INTO history (amount, from_code, to_code, result) VALUES ('$userAmount', '$fromCode', '$toCode', '$fromPLN');";
-        $query_result = mysqli_query($connection, $query);
-
-        // print_r($fromPLN);
-    };
-
-    // $currentRate = $rates['mid'];
-    // $result = $userAmount * $currentRate;
-};
 
 ?>
 
@@ -137,11 +59,6 @@ if (isset($_POST)) {
                         } ?>
                     </p>
                 </form>
-                <?php
-                // if ($result) {
-                //     echo "<div>" . $result . "</div>";
-                // }
-                ?>
             </div>
         </div>
     </div>
@@ -189,7 +106,7 @@ if (isset($_POST)) {
                     echo "<tr><td>" . $row['amount'] . "</td><td> " . $row['from_code'] . "</td><td> " . $row['to_code'] . "</td><td> " . $row['result'] . "</td></tr>";
                 };
             } else {
-                echo "0 results";
+                echo "<tr><td>0 results</td><td></td><td></td><td></td></tr>";
             };
             ?>
         </table>
