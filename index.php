@@ -59,6 +59,11 @@ $error = "";
                         } ?>
                     </p>
                 </form>
+                <?php
+                if (!$_POST['user_amount']) {
+                    echo "You have to enter proper amount to convert currency";
+                }
+                ?>
             </div>
         </div>
     </div>

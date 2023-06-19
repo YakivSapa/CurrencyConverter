@@ -1,9 +1,7 @@
 <?php
 // User form data.
 if (isset($_POST)) {
-    if (!$_POST['user_amount']) {
-        echo "You have to enter proper amount to convert currency";
-    } else {
+    if ($_POST['user_amount']) {
         $fromCode = $_POST['first_code'];
         $toCode = $_POST['second_code'];
         $userAmount = $_POST['user_amount'];
